@@ -38,8 +38,8 @@ const options = {
     
       if (selectedDates[0] < new Date()) {
           window.alert('Please choose a date in the future');
-      } else {
-          btnStart.disabled = false;
+      } else if (selectedDates[0] > new Date()) {
+        btnStart.disabled = false;
       };
   },
 };
@@ -51,15 +51,21 @@ btnStart.addEventListener('click', () => {
 
 function timeCount() {
     const timeDifference = fp.selectedDates[0] - new Date();
-    if (timeDifference < 999) {
-        clearInterval(timerId);
-    };  
+    btnStart.disabled = true;        
     const timeLeft = convertMs(timeDifference);
-  
-    days.textContent = addLeadingZero(timeLeft.days);
-    hours.textContent = addLeadingZero(timeLeft.hours);
-    minutes.textContent = addLeadingZero(timeLeft.minutes);
-    seconds.textContent = addLeadingZero(timeLeft.seconds);
+    if (timeDifference > 0) {
+        console.log(timeDifference);
+        days.textContent = addLeadingZero(timeLeft.days);
+        hours.textContent = addLeadingZero(timeLeft.hours);
+        minutes.textContent = addLeadingZero(timeLeft.minutes);
+        seconds.textContent = addLeadingZero(timeLeft.seconds);        
+    } else {
+        clearInterval(timerId);        
+        days.textContent = "00";
+        hours.textContent = "00";
+        minutes.textContent = "00";
+        seconds.textContent = "00";        
+    };      
 };        
 
 function addLeadingZero(value) {
